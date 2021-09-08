@@ -1,27 +1,33 @@
 <script>
   const squareSize = 100
-  const size = 4
+  const size = 3
   const shuffleMoves = 200
 
   const shiftImage = (x, y) =>
     `background-position: left -${x * squareSize}px top -${y * squareSize}px`
 
+  const blank = {id: null, blank: true}
+
   const squares = Array.from({length: size * size}).map((_, i) => {
-    const x = i % size
-    const y = Math.floor(i / size)
+    const targetX = i % size
+    const targetY = Math.floor(i / size)
     return {
       id: i,
       label: "",
       label: i + 1,
-      x,
-      y,
-      style: shiftImage(x, y),
+      targetX,
+      targetY,
+      style: shiftImage(targetX, targetY),
     }
   })
   squares.pop()
 
   let grid = Array.from({length: size}).map(
-    (_, j) => Array.from({length: size}).map((_, i) => squares[j * size + i])
+    (_, j) => Array.from({length: size}).map((_, i) => squares[j * size + i] || blank)
+  )
+
+  let positions = Array.from({length: size * size}).map(
+    (_, i) => [i % size, Math.floor(i / size)]
   )
 
   let blankIndex = squares.length
@@ -38,6 +44,8 @@
     grid.forEach((line, y) => {
       line.forEach((square, x) => {
         if (!square) return
+        square.x = x
+        square.y = y
         square.activable = (
           y === blankY && (x === blankX - 1 || x === blankX + 1)
           || x === blankX && (y === blankY - 1 || y === blankY + 1)
@@ -45,22 +53,21 @@
       })
     })
     grid = grid
+    squares = squares
   }
 
   const move = (square, x, y) => {
+    square.x = x
+    square.y = y
     grid[blankY][blankX] = square
-    grid[y][x] = null
+    grid[y][x] = blank
     grid = grid
+    squares = squares
     blankIndex = y * size + x
   }
 
   const checkVictory = () =>
-    grid.every(
-      (line, y) => line.every(
-        (square, x) => !square || square.x === x && square.y === y
-      )
-    )
-
+    squares.every(({ x, y, targetX, targetY }) => x === targetX && y === targetY)
 
   $: blankIndex, updateSquares()
 
@@ -92,11 +99,12 @@
   }
 
   const solve = () => {
-    grid[size - 1][size - 1] = null
+    grid[size - 1][size - 1] = blank
     squares.forEach((square) => {
-      grid[square.y][square.x] = square
+      grid[square.targetY][square.targetX] = square
     })
     grid = grid
+    squares = squares
     blankIndex = squares.length
   }
 
@@ -105,21 +113,16 @@
 <h1 class:hidden={!victory}>Victoire&nbsp;!</h1>
 
 <div class="frame" style="width: {squareSize * size}px; height: {squareSize * size}px;">
-  {#each grid as line, y (y)}
-    {#each line as square, x (square?.id)}
-      {#if square}
-        <div
-          class="square"
-          class:activable={square.activable}
-          style="left: {x * squareSize}px; top: {y * squareSize}px; {square.style}"
-          on:click={square.activable ? () => move(square, x, y) : null}
-        >
-          {square.label}
-        </div>
-      {:else}
-        <div class="square blank" style="left: {blankX * squareSize}px; top: {blankY * squareSize}px;"></div>
-      {/if}
-    {/each}
+  {#each squares as square (square.id)}
+    <div
+      class="square"
+      class:blank={square.blank}
+      class:activable={square.activable}
+      style="left: {square.x * squareSize}px; top: {square.y * squareSize}px; {square.style}"
+      on:click={square.activable ? () => move(square, square.x, square.y) : null}
+    >
+      {square.label}
+    </div>
   {/each}
 </div>
 
@@ -161,12 +164,10 @@
     opacity: .75;
   }
   .square {
-    background: url(https://baconmockup.com/400/400/);
+    background: url(https://baconmockup.com/300/300/);
   }
   .square.blank {
-    background: var(--border-color);
-    background: transparent;
-    transition: none;
+    display: none;
   }
 
   .buttons {
