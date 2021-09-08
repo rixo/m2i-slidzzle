@@ -1,2 +1,23 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script>
+  import Puzzle from '$lib/Puzzle.svelte'
+</script>
+
+<main>
+  <Puzzle />
+</main>
+
+<style>
+  :global(body) {
+    margin: 0;
+    padding: 0;
+    background-color: #f8f8f8;
+  }
+  main {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+</style>
