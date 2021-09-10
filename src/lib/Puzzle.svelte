@@ -129,9 +129,9 @@
   }
 </script>
 
-<h1 class:hidden={!victory}>Bravo&nbsp;!!</h1>
-
 <div class="game" class:victory={victory} >
+  <h2 class="victory-text">Bravo&nbsp;! 🎉</h2>
+
   <div class="frame" style="width: {squareSize * sizeX + 2}px; height: {squareSize * sizeY + 2}px;">
     <div class="board">
       {#if ready}
@@ -161,9 +161,6 @@
 -->
 
 <style>
-  h1.hidden {
-    visibility: hidden;
-  }
   .frame {
     --border-color: #A2CDBE;
     --border: 1px solid var(--border-color);
@@ -205,6 +202,17 @@
     display: none;
   }
 
+  .victory-text {
+    color: #B65593;
+    visibility: hidden;
+    font-size: 3rem;
+    margin: 2rem 0 1rem;
+    text-align: center;
+  }
+  .victory .victory-text {
+    color: #B65593;
+    visibility: visible;
+  }
   .victory .square {
     border-color: transparent;
   }
