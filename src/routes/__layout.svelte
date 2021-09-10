@@ -1,5 +1,5 @@
 <div class="page">
-  <img class="logo" src="/logo.png" />
+  <img class="logo" src="/logo.png" alt="2itech Academy by M2i" />
   <slot>
     <main />
   </slot>
