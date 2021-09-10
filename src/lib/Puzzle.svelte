@@ -129,11 +129,9 @@
   }
 </script>
 
-<!--
-<h1 class:hidden={!victory}>Victoire&nbsp;!</h1>
--->
+<h1 class:hidden={!victory}>Bravo&nbsp;!!</h1>
 
-<div className="game" class:victory={victory} >
+<div class="game" class:victory={victory} >
   <div class="frame" style="width: {squareSize * sizeX + 2}px; height: {squareSize * sizeY + 2}px;">
     <div class="board">
       {#if ready}
@@ -202,9 +200,6 @@
   .square {
     background: url(https://baconmockup.com/500/500/);
     background: url(/square.jpg);
-    //background-size: 400%;
-    //width: 200px;
-    //height: 200px;
   }
   .square.blank {
     display: none;
