@@ -1,4 +1,6 @@
 <script>
+  import { onMount } from 'svelte'
+
   export let labels = false
 
   const squareSize = 200
@@ -13,6 +15,8 @@
     `background-position: left -${x * squareSize}px top -${y * squareSize}px`
 
   const blank = {id: null, blank: true}
+
+  let ready = false
 
   let squares = Array.from({length: sizeX * sizeY}).map((_, i) => {
     const targetX = i % sizeX
@@ -105,6 +109,7 @@
     for (let i = 0; i < n; i++) {
       shuffleOnce()
     }
+    ready = true
   }
 
   const solve = () => {
@@ -117,32 +122,41 @@
     blankIndex = squares.length
   }
 
+  onMount(shuffle)
+
+  window.slidzzle = { solve }
 </script>
 
+<!--
 <h1 class:hidden={!victory}>Victoire&nbsp;!</h1>
+-->
 
 <div className="game" class:victory={victory} >
   <div class="frame" style="width: {squareSize * sizeX + 2}px; height: {squareSize * sizeY + 2}px;">
     <div class="board">
-      {#each squares as square (square.id)}
-        <div
-          class="square"
-          class:blank={square.blank}
-          class:activable={square.activable}
-          style="left: {square.x * squareSize}px; top: {square.y * squareSize}px; {square.style}"
-          on:click={square.activable ? () => move(square, square.x, square.y) : null}
-        >
-          {square.label}
-        </div>
-      {/each}
+      {#if ready}
+        {#each squares as square (square.id)}
+          <div
+            class="square"
+            class:blank={square.blank}
+            class:activable={square.activable}
+            style="left: {square.x * squareSize}px; top: {square.y * squareSize}px; {square.style}"
+            on:click={square.activable ? () => move(square, square.x, square.y) : null}
+          >
+            {square.label}
+          </div>
+        {/each}
+      {/if}
     </div>
   </div>
 </div>
 
+<!--
 <div class="buttons">
   <button on:click={() => shuffle()}>Shuffle</button>
   <button on:click={solve}>Solve</button>
 </div>
+-->
 
 <style>
   h1.hidden {
