@@ -1,5 +1,5 @@
 <div class="page">
-  <h1>m2i puzzle</h1>
+  <img class="logo" src="/logo.png" />
   <slot>
     <main />
   </slot>
@@ -11,6 +11,12 @@
     padding: 0;
     background-color: #f8f8f8;
   }
+
+  .logo {
+    height: 100px;
+    margin-top: 2rem;
+  }
+
   .page {
     width: 100vw;
     height: 100vh;
