@@ -217,7 +217,9 @@
     border-color: transparent;
   }
 
+  /*
   .buttons {
     margin: 1rem 0;
   }
+  */
 </style>
