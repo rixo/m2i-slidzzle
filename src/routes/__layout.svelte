@@ -30,9 +30,4 @@
   .page > :global(main) {
     flex: 1;
   }
-  main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
 </style>

@@ -11,3 +11,11 @@
 <main>
   <Puzzle {size} labels={easy} />
 </main>
+
+<style>
+  main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+</style>
