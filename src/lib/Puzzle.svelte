@@ -2,9 +2,9 @@
   import { onMount } from 'svelte'
 
   export let labels = false
+  export let size = 3
 
   const squareSize = 200
-  const size = 3
   const sizeX = size
   const sizeY = size
   const shuffleMoves = 200
@@ -124,7 +124,9 @@
 
   onMount(shuffle)
 
-  window.slidzzle = { solve }
+  if (typeof window !== "undefined") {
+    window.slidzzle = { solve }
+  }
 </script>
 
 <!--
@@ -143,7 +145,9 @@
             style="left: {square.x * squareSize}px; top: {square.y * squareSize}px; {square.style}"
             on:click={square.activable ? () => move(square, square.x, square.y) : null}
           >
-            {square.label}
+            {#if !victory}
+              {square.label}
+            {/if}
           </div>
         {/each}
       {/if}
@@ -187,7 +191,9 @@
     background-color: #fff;
 
     font-weight: bold;
-    color: #0f0;
+    color: #fff;
+    font-size: 32px;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
   }
   .square.activable:hover {
     cursor: pointer;

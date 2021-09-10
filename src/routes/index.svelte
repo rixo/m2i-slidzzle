@@ -1,25 +1,8 @@
-<script>
-  import Puzzle from '$lib/Puzzle.svelte'
-</script>
-
 <main>
-  <Puzzle />
+  <ul>
+    <li><a href="/3">3x3</a></li>
+    <li><a href="/4">4x4</a> (<a href="/4-ez">easier</a>)</li>
+    <li><a href="/5">5x5</a> (<a href="/5-ez">easier</a>)</li>
+    <li><a href="/6">6x6</a> (<a href="/6-ez">easier</a>)</li>
+  </ul>
 </main>
-
-<style>
-  :global(body) {
-    margin: 0;
-    padding: 0;
-    background-color: #f8f8f8;
-  }
-  main {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    font-family: sans-serif;
-  }
-</style>
