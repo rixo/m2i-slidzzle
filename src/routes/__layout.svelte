@@ -10,6 +10,10 @@
     margin: 0;
     padding: 0;
     background-color: #f8f8f8;
+
+    --primary: #303366;
+    --accent1: #A2CDBE;
+    --accent2: #B65593;
   }
 
   .logo {

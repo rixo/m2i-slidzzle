@@ -164,7 +164,7 @@
   .frame {
     --border-color: #A2CDBE;
     --border: 1px solid var(--border-color);
-    border: 8px solid #303366;
+    border: 8px solid var(--primary);
     background-color: #A2CDBE;
     padding: 2px 0 0 2px;
   }
@@ -178,7 +178,7 @@
     transition: all 200ms;
 
     border: var(--border);
-    border: 2px solid #A2CDBE;
+    border: 2px solid var(--accent1);
     box-sizing: border-box;
     display: flex;
     justify-content: center;
@@ -203,14 +203,13 @@
   }
 
   .victory-text {
-    color: #B65593;
+    color: var(--accent2);
     visibility: hidden;
     font-size: 3rem;
     margin: 2rem 0 1rem;
     text-align: center;
   }
   .victory .victory-text {
-    color: #B65593;
     visibility: visible;
   }
   .victory .square {
