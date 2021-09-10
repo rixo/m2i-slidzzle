@@ -129,7 +129,7 @@
   }
 </script>
 
-<div class="game" class:victory={victory} >
+<div class="game" class:victory={ready && victory} >
   <h2 class="victory-text">Bravo&nbsp;! 🎉</h2>
 
   <div class="frame" style="width: {squareSize * sizeX + 2}px; height: {squareSize * sizeY + 2}px;">

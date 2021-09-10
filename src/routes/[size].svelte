@@ -2,6 +2,7 @@
   import { page } from '$app/stores'
 
   import Puzzle from '$lib/Puzzle.svelte'
+  import Zoom from '$lib/Zoom.svelte'
 
   export let easy = false
 
@@ -9,13 +10,22 @@
 </script>
 
 <main>
-  <Puzzle {size} labels={easy} />
+  <Zoom>
+    <Puzzle {size} labels={easy} />
+  </Zoom>
 </main>
 
 <style>
   main {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    align-self: stretch;
+    position: relative;
+  }
+  main > :global(*) {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
   }
 </style>

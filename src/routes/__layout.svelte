@@ -24,7 +24,7 @@
   .page {
     min-width: 100vw;
     min-height: 100vh;
-    padding: 1rem;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     justify-content: center;
