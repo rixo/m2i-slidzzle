@@ -1,41 +1,50 @@
 <script>
-  const squareSize = 100
+  export let labels = false
+
+  const squareSize = 200
   const size = 3
+  const sizeX = size
+  const sizeY = size
   const shuffleMoves = 200
+
+  const srcWidth = 1200
 
   const shiftImage = (x, y) =>
     `background-position: left -${x * squareSize}px top -${y * squareSize}px`
 
   const blank = {id: null, blank: true}
 
-  const squares = Array.from({length: size * size}).map((_, i) => {
-    const targetX = i % size
-    const targetY = Math.floor(i / size)
+  let squares = Array.from({length: sizeX * sizeY}).map((_, i) => {
+    const targetX = i % sizeX
+    const targetY = Math.floor(i / sizeY)
     return {
       id: i,
-      label: "",
-      label: i + 1,
+      label: labels ? String(i + 1) : "",
       targetX,
       targetY,
-      style: shiftImage(targetX, targetY),
+      style: [
+        shiftImage(targetX, targetY),
+        `width: ${squareSize}px; height: ${squareSize}px`,
+        `background-size: ${size * 100}%`,
+      ].join(';')
     }
   })
   squares.pop()
 
-  let grid = Array.from({length: size}).map(
-    (_, j) => Array.from({length: size}).map((_, i) => squares[j * size + i] || blank)
+  let grid = Array.from({length: sizeY}).map(
+    (_, j) => Array.from({length: sizeX}).map((_, i) => squares[j * sizeY + i] || blank)
   )
 
-  let positions = Array.from({length: size * size}).map(
-    (_, i) => [i % size, Math.floor(i / size)]
+  let positions = Array.from({length: sizeX * sizeY}).map(
+    (_, i) => [i % sizeX, Math.floor(i / sizeY)]
   )
 
   let blankIndex = squares.length
   let blankX, blankY
 
   const updateBlank = () => {
-    blankX = blankIndex % size
-    blankY = Math.floor(blankIndex / size)
+    blankX = blankIndex % sizeX
+    blankY = Math.floor(blankIndex / sizeY)
   }
 
   $: blankIndex, updateBlank()
@@ -63,7 +72,7 @@
     grid[y][x] = blank
     grid = grid
     squares = squares
-    blankIndex = y * size + x
+    blankIndex = y * sizeY + x
   }
 
   const checkVictory = () =>
@@ -99,7 +108,7 @@
   }
 
   const solve = () => {
-    grid[size - 1][size - 1] = blank
+    grid[sizeY - 1][sizeX - 1] = blank
     squares.forEach((square) => {
       grid[square.targetY][square.targetX] = square
     })
@@ -112,18 +121,22 @@
 
 <h1 class:hidden={!victory}>Victoire&nbsp;!</h1>
 
-<div class="frame" style="width: {squareSize * size}px; height: {squareSize * size}px;">
-  {#each squares as square (square.id)}
-    <div
-      class="square"
-      class:blank={square.blank}
-      class:activable={square.activable}
-      style="left: {square.x * squareSize}px; top: {square.y * squareSize}px; {square.style}"
-      on:click={square.activable ? () => move(square, square.x, square.y) : null}
-    >
-      {square.label}
+<div className="game" class:victory={victory} >
+  <div class="frame" style="width: {squareSize * sizeX + 2}px; height: {squareSize * sizeY + 2}px;">
+    <div class="board">
+      {#each squares as square (square.id)}
+        <div
+          class="square"
+          class:blank={square.blank}
+          class:activable={square.activable}
+          style="left: {square.x * squareSize}px; top: {square.y * squareSize}px; {square.style}"
+          on:click={square.activable ? () => move(square, square.x, square.y) : null}
+        >
+          {square.label}
+        </div>
+      {/each}
     </div>
-  {/each}
+  </div>
 </div>
 
 <div class="buttons">
@@ -136,9 +149,13 @@
     visibility: hidden;
   }
   .frame {
-    --border-color: lightgrey;
+    --border-color: #A2CDBE;
     --border: 1px solid var(--border-color);
-    border: var(--border);
+    border: 8px solid #303366;
+    background-color: #A2CDBE;
+    padding: 2px 0 0 2px;
+  }
+  .board {
     display: flex;
     flex-wrap: wrap;
     position: relative;
@@ -147,10 +164,9 @@
     position: absolute;
     transition: all 200ms;
 
-    box-sizing: border-box;
     border: var(--border);
-    width: 100px;
-    height: 100px;
+    border: 2px solid #A2CDBE;
+    box-sizing: border-box;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -164,10 +180,18 @@
     opacity: .75;
   }
   .square {
-    background: url(https://baconmockup.com/300/300/);
+    background: url(https://baconmockup.com/500/500/);
+    background: url(/square.jpg);
+    //background-size: 400%;
+    //width: 200px;
+    //height: 200px;
   }
   .square.blank {
     display: none;
+  }
+
+  .victory .square {
+    border-color: transparent;
   }
 
   .buttons {
