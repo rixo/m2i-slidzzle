@@ -9,8 +9,6 @@
   const sizeY = size
   const shuffleMoves = 200
 
-  const srcWidth = 1200
-
   const shiftImage = (x, y) =>
     `background-position: left -${x * squareSize}px top -${y * squareSize}px`
 
@@ -37,10 +35,6 @@
 
   let grid = Array.from({length: sizeY}).map(
     (_, j) => Array.from({length: sizeX}).map((_, i) => squares[j * sizeY + i] || blank)
-  )
-
-  let positions = Array.from({length: sizeX * sizeY}).map(
-    (_, i) => [i % sizeX, Math.floor(i / sizeY)]
   )
 
   let blankIndex = squares.length
