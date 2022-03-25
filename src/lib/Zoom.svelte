@@ -9,9 +9,13 @@
   const handleResize = () => {
     const child = el.firstChild
     if (!child) return
+
+    const smallestDim = Math.min( child.scrollWidth, child.scrollHeight)
+    const padding = smallestDim > 900 ? 20 : 5
+
     const ratio = Math.min(
-      (el.offsetWidth - 5) / child.scrollWidth,
-      (el.offsetHeight - 5) / child.scrollHeight,
+      (el.offsetWidth - padding) / child.scrollWidth,
+      (el.offsetHeight - padding) / child.scrollHeight,
     )
     zoom = ratio
     ready = true

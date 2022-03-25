@@ -130,7 +130,9 @@
 </script>
 
 <div class="game" class:victory={ready && victory} >
-  <h2 class="victory-text">Bravo&nbsp;! 🎉</h2>
+  <div class="victory-text">
+    <h2 >Bravo&nbsp;! 🎉</h2>
+  </div>
 
   <div class="frame" style="width: {squareSize * sizeX + 2}px; height: {squareSize * sizeY + 2}px;">
     <div class="board">
@@ -150,6 +152,10 @@
         {/each}
       {/if}
     </div>
+  </div>
+
+  <div class="victory-text">
+    <p>Le chiffre secret est&nbsp: <strong>1</strong></p>
   </div>
 </div>
 
@@ -204,13 +210,16 @@
 
   .victory-text {
     color: var(--accent2);
-    visibility: hidden;
+    opacity: 0;
     font-size: 3rem;
     margin: 2rem 0 1rem;
     text-align: center;
+    transition: opacity 500ms ease-out;
   }
   .victory .victory-text {
     visibility: visible;
+    opacity: 1;
+    transition-timing-function: ease-in;
   }
   .victory .square {
     border-color: transparent;
