@@ -154,7 +154,7 @@
     </div>
   </div>
 
-  <div class="victory-text">
+  <div class="victory-text victory-secondary">
     <p>Le chiffre secret est&nbsp: <strong>1</strong></p>
   </div>
 </div>
@@ -220,14 +220,16 @@
     visibility: visible;
     opacity: 1;
     transition-timing-function: ease-in;
+    transition-duration: 200ms;
   }
   .victory .square {
     border-color: transparent;
   }
 
-  /*
-  .buttons {
-    margin: 1rem 0;
+  .victory-secondary {
+    transition-delay: 0ms;
   }
-  */
+  .victory .victory-secondary {
+    transition-delay: 1000ms;
+  }
 </style>
