@@ -18,7 +18,6 @@
 
   .logo {
     height: 100px;
-    margin-top: 2rem;
   }
 
   .page {
@@ -31,6 +30,8 @@
     align-items: center;
 
     font-family: sans-serif;
+
+    padding: 1rem 0;
   }
   .page > :global(main) {
     flex: 1;
